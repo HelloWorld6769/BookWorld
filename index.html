@@ -6,21 +6,57 @@
 <title>Book World</title>
 
 <style>
+:root {
+  --bg-gradient: linear-gradient(135deg, #667eea, #764ba2);
+  --card-bg: white;
+  --text-color: black;
+}
+
+body.dark {
+  --bg-gradient: linear-gradient(135deg, #1e1e2f, #121212);
+  --card-bg: #1f1f2e;
+  --text-color: white;
+}
+
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: white;
+  background: var(--bg-gradient);
+  transition: 0.3s;
 }
 
 header {
-  text-align: center;
-  padding: 60px 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  color: white;
 }
 
-h1 {
-  font-size: 3em;
-  margin: 0;
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: 1.8em;
+  font-weight: bold;
+}
+
+.logo span {
+  margin-left: 10px;
+}
+
+.toggle-btn {
+  background: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.hero {
+  text-align: center;
+  color: white;
+  padding: 40px 20px;
 }
 
 .search-box {
@@ -47,13 +83,7 @@ h1 {
   border: none;
   border-radius: 20px;
   cursor: pointer;
-  background: white;
-  color: #764ba2;
   font-weight: bold;
-}
-
-.genres button:hover {
-  background: #ddd;
 }
 
 .books {
@@ -64,8 +94,8 @@ h1 {
 }
 
 .book-card {
-  background: white;
-  color: black;
+  background: var(--card-bg);
+  color: var(--text-color);
   border-radius: 15px;
   padding: 15px;
   text-align: center;
@@ -95,8 +125,8 @@ h1 {
 }
 
 .modal-content {
-  background: white;
-  color: black;
+  background: var(--card-bg);
+  color: var(--text-color);
   padding: 30px;
   border-radius: 15px;
   width: 90%;
@@ -124,12 +154,19 @@ h1 {
 <body>
 
 <header>
-<h1>📚 Book World</h1>
-<p>Discover, Explore, and Read Classic Literature Online</p>
+  <div class="logo">
+    📚 <span>Book World</span>
+  </div>
+  <button class="toggle-btn" onclick="toggleMode()">🌙 Dark Mode</button>
 </header>
 
+<div class="hero">
+  <h1>Discover Timeless Literature</h1>
+  <p>Explore 25+ classic books. Read instantly. No downloads required.</p>
+</div>
+
 <div class="search-box">
-<input type="text" id="searchInput" placeholder="Search books..." onkeyup="searchBooks()">
+  <input type="text" id="searchInput" placeholder="Search books..." onkeyup="searchBooks()">
 </div>
 
 <div class="genres">
@@ -138,46 +175,61 @@ h1 {
 <button onclick="filterGenre('Fantasy')">Fantasy</button>
 <button onclick="filterGenre('Horror')">Horror</button>
 <button onclick="filterGenre('Adventure')">Adventure</button>
+<button onclick="filterGenre('Classic')">Classic</button>
 </div>
 
-<div class="books" id="bookContainer">
+<div class="books">
 
-<div class="book-card" data-genre="Romance"
-onclick="openModal('Pride and Prejudice','Jane Austen','A romantic novel about manners and marriage.','Romance','https://www.gutenberg.org/cache/epub/1342/pg1342.cover.medium.jpg','https://www.gutenberg.org/files/1342/1342-h/1342-h.htm')">
-<img src="https://www.gutenberg.org/cache/epub/1342/pg1342.cover.medium.jpg">
-<h3>Pride and Prejudice</h3>
-<p>Jane Austen</p>
+<!-- 25 BOOKS -->
+
+<script>
+const books = [
+["Pride and Prejudice","Jane Austen","Romance","1342"],
+["Alice in Wonderland","Lewis Carroll","Fantasy","11"],
+["Dracula","Bram Stoker","Horror","345"],
+["Treasure Island","R. L. Stevenson","Adventure","120"],
+["Moby Dick","Herman Melville","Classic","2701"],
+["Frankenstein","Mary Shelley","Horror","84"],
+["Jane Eyre","Charlotte Brontë","Romance","1260"],
+["Great Expectations","Charles Dickens","Classic","1400"],
+["Sherlock Holmes","Arthur Conan Doyle","Mystery","1661"],
+["Peter Pan","J.M. Barrie","Fantasy","16"],
+["Tom Sawyer","Mark Twain","Adventure","74"],
+["Huckleberry Finn","Mark Twain","Adventure","76"],
+["Wizard of Oz","L. Frank Baum","Fantasy","55"],
+["A Tale of Two Cities","Charles Dickens","Classic","98"],
+["Dr Jekyll and Mr Hyde","R.L. Stevenson","Horror","43"],
+["The Odyssey","Homer","Classic","1727"],
+["Metamorphosis","Franz Kafka","Classic","5200"],
+["The Iliad","Homer","Classic","6130"],
+["Little Women","Louisa May Alcott","Romance","514"],
+["The Time Machine","H.G. Wells","Fantasy","35"],
+["War of the Worlds","H.G. Wells","Fantasy","36"],
+["The Secret Garden","Frances Hodgson Burnett","Classic","113"],
+["Anne of Green Gables","L.M. Montgomery","Classic","45"],
+["Gulliver’s Travels","Jonathan Swift","Adventure","829"],
+["The Scarlet Letter","Nathaniel Hawthorne","Classic","33"]
+];
+
+books.forEach(book => {
+document.write(`
+<div class="book-card" data-genre="${book[2]}"
+onclick="openModal('${book[0]}','${book[1]}','${book[2]}','https://www.gutenberg.org/files/${book[3]}/${book[3]}-h/${book[3]}-h.htm','https://www.gutenberg.org/cache/epub/${book[3]}/pg${book[3]}.cover.medium.jpg')">
+<img src="https://www.gutenberg.org/cache/epub/${book[3]}/pg${book[3]}.cover.medium.jpg">
+<h3>${book[0]}</h3>
+<p>${book[1]}</p>
+</div>
+`);
+});
+</script>
+
 </div>
 
-<div class="book-card" data-genre="Fantasy"
-onclick="openModal('Alice in Wonderland','Lewis Carroll','A fantasy adventure of a girl in a magical world.','Fantasy','https://www.gutenberg.org/cache/epub/11/pg11.cover.medium.jpg','https://www.gutenberg.org/files/11/11-h/11-h.htm')">
-<img src="https://www.gutenberg.org/cache/epub/11/pg11.cover.medium.jpg">
-<h3>Alice in Wonderland</h3>
-<p>Lewis Carroll</p>
-</div>
-
-<div class="book-card" data-genre="Horror"
-onclick="openModal('Dracula','Bram Stoker','A gothic horror story of Count Dracula.','Horror','https://www.gutenberg.org/cache/epub/345/pg345.cover.medium.jpg','https://www.gutenberg.org/files/345/345-h/345-h.htm')">
-<img src="https://www.gutenberg.org/cache/epub/345/pg345.cover.medium.jpg">
-<h3>Dracula</h3>
-<p>Bram Stoker</p>
-</div>
-
-<div class="book-card" data-genre="Adventure"
-onclick="openModal('Treasure Island','Robert Louis Stevenson','A thrilling pirate adventure.','Adventure','https://www.gutenberg.org/cache/epub/120/pg120.cover.medium.jpg','https://www.gutenberg.org/files/120/120-h/120-h.htm')">
-<img src="https://www.gutenberg.org/cache/epub/120/pg120.cover.medium.jpg">
-<h3>Treasure Island</h3>
-<p>Robert Louis Stevenson</p>
-</div>
-
-</div>
-
-<div class="modal" id="bookModal">
+<div class="modal" id="modal">
 <div class="modal-content">
-<img id="modalImage">
+<img id="modalImg">
 <h2 id="modalTitle"></h2>
 <p id="modalAuthor"></p>
-<p id="modalDescription"></p>
 <button id="readBtn">Read Online</button>
 <button onclick="closeModal()">Close</button>
 </div>
@@ -185,38 +237,36 @@ onclick="openModal('Treasure Island','Robert Louis Stevenson','A thrilling pirat
 
 <script>
 function searchBooks() {
-  let input = document.getElementById("searchInput").value.toLowerCase();
-  let cards = document.getElementsByClassName("book-card");
-  for (let i = 0; i < cards.length; i++) {
-    let text = cards[i].innerText.toLowerCase();
-    cards[i].style.display = text.includes(input) ? "block" : "none";
-  }
+let input = document.getElementById("searchInput").value.toLowerCase();
+let cards = document.getElementsByClassName("book-card");
+for (let i = 0; i < cards.length; i++) {
+let text = cards[i].innerText.toLowerCase();
+cards[i].style.display = text.includes(input) ? "block" : "none";
+}
 }
 
 function filterGenre(genre) {
-  let cards = document.getElementsByClassName("book-card");
-  for (let i = 0; i < cards.length; i++) {
-    if (genre === "All" || cards[i].dataset.genre === genre) {
-      cards[i].style.display = "block";
-    } else {
-      cards[i].style.display = "none";
-    }
-  }
+let cards = document.getElementsByClassName("book-card");
+for (let i = 0; i < cards.length; i++) {
+cards[i].style.display =
+(genre === "All" || cards[i].dataset.genre === genre) ? "block" : "none";
+}
 }
 
-function openModal(title, author, desc, genre, img, link) {
-  document.getElementById("modalTitle").innerText = title;
-  document.getElementById("modalAuthor").innerText = "By " + author + " | " + genre;
-  document.getElementById("modalDescription").innerText = desc;
-  document.getElementById("modalImage").src = img;
-  document.getElementById("readBtn").onclick = function() {
-    window.open(link, "_blank");
-  };
-  document.getElementById("bookModal").style.display = "flex";
+function openModal(title, author, genre, link, img) {
+document.getElementById("modalTitle").innerText = title;
+document.getElementById("modalAuthor").innerText = author + " | " + genre;
+document.getElementById("modalImg").src = img;
+document.getElementById("readBtn").onclick = () => window.open(link, "_blank");
+document.getElementById("modal").style.display = "flex";
 }
 
 function closeModal() {
-  document.getElementById("bookModal").style.display = "none";
+document.getElementById("modal").style.display = "none";
+}
+
+function toggleMode() {
+document.body.classList.toggle("dark");
 }
 </script>
 
