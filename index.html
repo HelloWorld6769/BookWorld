@@ -4,82 +4,256 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Book World</title>
+
 <style>
-/* --- General styles --- */
-body { font-family: Arial, sans-serif; margin:0; padding:0; background: linear-gradient(120deg,#f0f4ff,#fff6f5);}
-header { padding:20px; text-align:center; font-size:28px; font-weight:bold; background: linear-gradient(to right,#6a11cb,#2575fc); color:white; box-shadow:0 4px 6px rgba(0,0,0,0.2);}
-header .logo { font-size:36px; }
-.hero { text-align:center; padding:50px 20px; color:#333;}
-.hero h1 { font-size:32px; margin-bottom:10px; color:#6a11cb;}
-.hero input { width:70%; max-width:400px; padding:12px 20px; border-radius:30px; border:1px solid #ddd; font-size:16px; margin-top:10px;}
-section { padding:20px;}
-h2 { margin-left:10px; font-size:22px; color:#2575fc; margin-bottom:12px;}
-.books-container { display:flex; gap:20px; overflow-x:auto; padding-left:10px;}
-.book-card { min-width:140px; text-align:center; background:white; padding:10px; border-radius:12px; box-shadow:0 4px 6px rgba(0,0,0,0.1); transition: transform 0.3s;}
-.book-card:hover { transform: translateY(-5px);}
-.book-card img { width:120px; height:180px; border-radius:8px; object-fit:cover;}
-.book-title { font-weight:bold; font-size:15px; margin-top:8px; color:#333;}
-.book-author { font-size:13px; color:#555; margin-bottom:8px;}
-.pdf-btn { padding:6px 12px; border:none; border-radius:20px; background:linear-gradient(to right,#ff512f,#dd2476); color:white; cursor:pointer; font-size:13px; transition: all 0.3s;}
-.pdf-btn:hover { background:linear-gradient(to right,#dd2476,#ff512f);}
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to right, #667eea, #764ba2);
+  color: white;
+}
+
+header {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+h1 {
+  font-size: 3em;
+  margin-bottom: 10px;
+}
+
+.search-box {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.search-box input {
+  width: 60%;
+  padding: 12px;
+  border-radius: 30px;
+  border: none;
+  font-size: 16px;
+}
+
+.books {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.book-card {
+  background: white;
+  color: black;
+  border-radius: 15px;
+  padding: 15px;
+  text-align: center;
+  transition: 0.3s;
+}
+
+.book-card:hover {
+  transform: scale(1.05);
+}
+
+.book-card img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.book-card h3 {
+  margin: 10px 0 5px;
+}
+
+.book-card p {
+  font-size: 14px;
+  color: #555;
+}
+
+.book-card a {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 15px;
+  background: #667eea;
+  color: white;
+  border-radius: 20px;
+  text-decoration: none;
+}
+
+.book-card a:hover {
+  background: #764ba2;
+}
 </style>
 </head>
+
 <body>
 
-<header><span class="logo">📖🌈 Book World</span></header>
+<header>
+  <h1>📚 Book World</h1>
+  <p>Explore classic ebooks online — read instantly without downloading</p>
+</header>
 
-<div class="hero">
-<h1>Find Your Next Great Read</h1>
-<input type="text" id="searchInput" placeholder="Search by Title or Author..." onkeyup="searchBooks()">
+<div class="search-box">
+  <input type="text" id="searchInput" placeholder="Search by title, author, or genre..." onkeyup="searchBooks()">
 </div>
 
-<section>
-<h2>Popular Now</h2>
-<div id="popular" class="books-container"></div>
-</section>
+<div class="books" id="bookContainer">
 
-<section>
-<h2>Recommended</h2>
-<div id="recommended" class="books-container"></div>
-</section>
+<!-- 20 BOOKS -->
+
+<div class="book-card">
+<img src="https://www.gutenberg.org/cache/epub/1342/pg1342.cover.medium.jpg">
+<h3>Pride and Prejudice</h3>
+<p>Romance | Jane Austen</p>
+<a href="https://www.gutenberg.org/ebooks/1342" target="_blank">Read Online</a>
+</div>
+
+<div class="book-card">
+<img src="https://www.gutenberg.org/cache/epub/11/pg11.cover.medium.jpg">
+<h3>Alice's Adventures in Wonderland</h3>
+<p>Fantasy | Lewis Carroll</p>
+<a href="https://www.gutenberg.org/ebooks/11" target="_blank">Read Online</a>
+</div>
+
+<div class="book-card">
+<img src="https://www.gutenberg.org/cache/epub/84/pg84.cover.medium.jpg">
+<h3>Frankenstein</h3>
+<p>Horror | Mary Shelley</p>
+<a href="https://www.gutenberg.org/ebooks/84" target="_blank">Read Online</a>
+</div>
+
+<div class="book-card">
+<img src="https://www.gutenberg.org/cache/epub/1661/pg1661.cover.medium.jpg">
+<h3>The Adventures of Sherlock Holmes</h3>
+<p>Mystery | Arthur Conan Doyle</p>
+<a href="https://www.gutenberg.org/ebooks/1661" target="_blank">Read Online</a>
+</div>
+
+<div class="book-card">
+<img src="https://www.gutenberg.org/cache/epub/2701/pg2701.cover.medium.jpg">
+<h3>Moby Dick</h3>
+<p>Adventure | Herman Melville</p>
+<a href="https://www.gutenberg.org/ebooks/2701" target="_blank">Read Online</a>
+</div>
+
+<div class="book-card">
+<img src="https://www.gutenberg.org/cache/epub/74/pg74.cover.medium.jpg">
+<h3>The Adventures of Tom Sawyer</h3>
+<p>Adventure | Mark Twain</p>
+<a href="https://www.gutenberg.org/ebooks/74" target="_blank">Read Online</a>
+</div>
+
+<div class="book-card">
+<img src="https://www.gutenberg.org/cache/epub/98/pg98.cover.medium.jpg">
+<h3>A Tale of Two Cities</h3>
+<p>Historical | Charles Dickens</p>
+<a href="https://www.gutenberg.org/ebooks/98" target="_blank">Read Online</a>
+</div>
+
+<div class="book-card">
+<img src="https://www.gutenberg.org/cache/epub/345/pg345.cover.medium.jpg">
+<h3>Dracula</h3>
+<p>Horror | Bram Stoker</p>
+<a href="https://www.gutenberg.org/ebooks/345" target="_blank">Read Online</a>
+</div>
+
+<div class="book-card">
+<img src="https://www.gutenberg.org/cache/epub/1080/pg1080.cover.medium.jpg">
+<h3>A Modest Proposal</h3>
+<p>Satire | Jonathan Swift</p>
+<a href="https://www.gutenberg.org/ebooks/1080" target="_blank">Read Online</a>
+</div>
+
+<div class="book-card">
+<img src="https://www.gutenberg.org/cache/epub/43/pg43.cover.medium.jpg">
+<h3>The Strange Case of Dr Jekyll and Mr Hyde</h3>
+<p>Horror | Robert Louis Stevenson</p>
+<a href="https://www.gutenberg.org/ebooks/43" target="_blank">Read Online</a>
+</div>
+
+<div class="book-card">
+<img src="https://www.gutenberg.org/cache/epub/1400/pg1400.cover.medium.jpg">
+<h3>Great Expectations</h3>
+<p>Classic | Charles Dickens</p>
+<a href="https://www.gutenberg.org/ebooks/1400" target="_blank">Read Online</a>
+</div>
+
+<div class="book-card">
+<img src="https://www.gutenberg.org/cache/epub/1260/pg1260.cover.medium.jpg">
+<h3>Jane Eyre</h3>
+<p>Romance | Charlotte Brontë</p>
+<a href="https://www.gutenberg.org/ebooks/1260" target="_blank">Read Online</a>
+</div>
+
+<div class="book-card">
+<img src="https://www.gutenberg.org/cache/epub/55/pg55.cover.medium.jpg">
+<h3>The Wonderful Wizard of Oz</h3>
+<p>Fantasy | L. Frank Baum</p>
+<a href="https://www.gutenberg.org/ebooks/55" target="_blank">Read Online</a>
+</div>
+
+<div class="book-card">
+<img src="https://www.gutenberg.org/cache/epub/120/pg120.cover.medium.jpg">
+<h3>Treasure Island</h3>
+<p>Adventure | Robert Louis Stevenson</p>
+<a href="https://www.gutenberg.org/ebooks/120" target="_blank">Read Online</a>
+</div>
+
+<div class="book-card">
+<img src="https://www.gutenberg.org/cache/epub/76/pg76.cover.medium.jpg">
+<h3>Adventures of Huckleberry Finn</h3>
+<p>Adventure | Mark Twain</p>
+<a href="https://www.gutenberg.org/ebooks/76" target="_blank">Read Online</a>
+</div>
+
+<div class="book-card">
+<img src="https://www.gutenberg.org/cache/epub/521/pg521.cover.medium.jpg">
+<h3>Metamorphosis</h3>
+<p>Fiction | Franz Kafka</p>
+<a href="https://www.gutenberg.org/ebooks/521" target="_blank">Read Online</a>
+</div>
+
+<div class="book-card">
+<img src="https://www.gutenberg.org/cache/epub/5200/pg5200.cover.medium.jpg">
+<h3>The Metamorphosis (German)</h3>
+<p>Fiction | Franz Kafka</p>
+<a href="https://www.gutenberg.org/ebooks/5200" target="_blank">Read Online</a>
+</div>
+
+<div class="book-card">
+<img src="https://www.gutenberg.org/cache/epub/844/pg844.cover.medium.jpg">
+<h3>The Importance of Being Earnest</h3>
+<p>Comedy | Oscar Wilde</p>
+<a href="https://www.gutenberg.org/ebooks/844" target="_blank">Read Online</a>
+</div>
+
+<div class="book-card">
+<img src="https://www.gutenberg.org/cache/epub/16/pg16.cover.medium.jpg">
+<h3>Peter Pan</h3>
+<p>Fantasy | J.M. Barrie</p>
+<a href="https://www.gutenberg.org/ebooks/16" target="_blank">Read Online</a>
+</div>
+
+<div class="book-card">
+<img src="https://www.gutenberg.org/cache/epub/2814/pg2814.cover.medium.jpg">
+<h3>Dubliners</h3>
+<p>Classic | James Joyce</p>
+<a href="https://www.gutenberg.org/ebooks/2814" target="_blank">Read Online</a>
+</div>
+
+</div>
 
 <script>
-// --- Books data with cover images and PDF names ---
-const books = [
-  { title:"The Hobbit", author:"J.R.R. Tolkien", cover:"https://m.media-amazon.com/images/I/91b0C2YNSrL.jpg", pdf:"thehobbit.pdf", section:"popular" },
-  { title:"Atomic Habits", author:"James Clear", cover:"https://m.media-amazon.com/images/I/51-nXsSRfZL._SX329_BO1,204,203,200_.jpg", pdf:"atomichabits.pdf", section:"recommended" },
-  { title:"1984", author:"George Orwell", cover:"https://m.media-amazon.com/images/I/71kxa1-0mfL.jpg", pdf:"1984.pdf", section:"popular" },
-  { title:"To Kill a Mockingbird", author:"Harper Lee", cover:"https://m.media-amazon.com/images/I/81OdwZGdEyL.jpg", pdf:"tokillamockingbird.pdf", section:"recommended" },
-  { title:"Pride and Prejudice", author:"Jane Austen", cover:"https://m.media-amazon.com/images/I/91HHqVTAJQL.jpg", pdf:"prideandprejudice.pdf", section:"popular" },
-  { title:"The Great Gatsby", author:"F. Scott Fitzgerald", cover:"https://m.media-amazon.com/images/I/81af+MCATTL.jpg", pdf:"thegreatgatsby.pdf", section:"recommended" },
-  { title:"The Catcher in the Rye", author:"J.D. Salinger", cover:"https://m.media-amazon.com/images/I/81OthjkJBuL.jpg", pdf:"catcherintherye.pdf", section:"popular" },
-  { title:"The Alchemist", author:"Paulo Coelho", cover:"https://m.media-amazon.com/images/I/71aFt4+OTOL.jpg", pdf:"thealchemist.pdf", section:"recommended" },
-  { title:"Moby Dick", author:"Herman Melville", cover:"https://m.media-amazon.com/images/I/81prV9Wb1tL.jpg", pdf:"mobydick.pdf", section:"popular" },
-  { title:"The Lord of the Rings", author:"J.R.R. Tolkien", cover:"https://m.media-amazon.com/images/I/91SZSW8qSsL.jpg", pdf:"lordoftherings.pdf", section:"recommended" }
-];
+function searchBooks() {
+  let input = document.getElementById("searchInput").value.toLowerCase();
+  let cards = document.getElementsByClassName("book-card");
 
-// --- Load books dynamically ---
-books.forEach(book=>{
-  const container = book.section==="popular"? document.getElementById("popular") : document.getElementById("recommended");
-  const card = document.createElement("div");
-  card.className="book-card";
-  card.innerHTML = `
-    <img src="${book.cover}" alt="${book.title}">
-    <p class="book-title">${book.title}</p>
-    <p class="book-author">${book.author}</p>
-    <button class="pdf-btn" onclick="window.open('${book.pdf}')">📖 Read PDF</button>
-  `;
-  container.appendChild(card);
-});
-
-// --- Search function ---
-function searchBooks(){
-  const input = document.getElementById("searchInput").value.toLowerCase();
-  document.querySelectorAll(".book-card").forEach(card=>{
-    const title = card.querySelector(".book-title").textContent.toLowerCase();
-    const author = card.querySelector(".book-author").textContent.toLowerCase();
-    card.style.display = (title.includes(input) || author.includes(input))?"block":"none";
-  });
+  for (let i = 0; i < cards.length; i++) {
+    let text = cards[i].innerText.toLowerCase();
+    cards[i].style.display = text.includes(input) ? "block" : "none";
+  }
 }
 </script>
 
