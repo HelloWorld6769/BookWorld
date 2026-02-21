@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,32 +8,52 @@
 <style>
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(to right, #667eea, #764ba2);
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #667eea, #764ba2);
   color: white;
 }
 
 header {
   text-align: center;
-  padding: 40px 20px;
+  padding: 60px 20px 30px;
 }
 
 h1 {
   font-size: 3em;
-  margin-bottom: 10px;
+  margin: 0;
 }
 
 .search-box {
   text-align: center;
-  margin-bottom: 30px;
+  margin: 20px;
 }
 
 .search-box input {
   width: 60%;
   padding: 12px;
-  border-radius: 30px;
+  border-radius: 25px;
   border: none;
   font-size: 16px;
+}
+
+.genres {
+  text-align: center;
+  margin: 20px;
+}
+
+.genres button {
+  padding: 8px 15px;
+  margin: 5px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  background: white;
+  color: #764ba2;
+  font-weight: bold;
+}
+
+.genres button:hover {
+  background: #ddd;
 }
 
 .books {
@@ -49,6 +69,7 @@ h1 {
   border-radius: 15px;
   padding: 15px;
   text-align: center;
+  cursor: pointer;
   transition: 0.3s;
 }
 
@@ -58,32 +79,44 @@ h1 {
 
 .book-card img {
   width: 100%;
-  height: 300px;
+  height: 280px;
   object-fit: cover;
   border-radius: 10px;
 }
 
-.book-card h3 {
-  margin: 10px 0 5px;
+.modal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.7);
+  justify-content: center;
+  align-items: center;
 }
 
-.book-card p {
-  font-size: 14px;
-  color: #555;
+.modal-content {
+  background: white;
+  color: black;
+  padding: 30px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 600px;
+  text-align: center;
 }
 
-.book-card a {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 8px 15px;
+.modal-content img {
+  width: 200px;
+  border-radius: 10px;
+}
+
+.modal-content button {
+  margin: 10px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 20px;
   background: #667eea;
   color: white;
-  border-radius: 20px;
-  text-decoration: none;
-}
-
-.book-card a:hover {
-  background: #764ba2;
+  cursor: pointer;
 }
 </style>
 </head>
@@ -91,169 +124,99 @@ h1 {
 <body>
 
 <header>
-  <h1>📚 Book World</h1>
-  <p>Explore classic ebooks online — read instantly without downloading</p>
+<h1>📚 Book World</h1>
+<p>Discover, Explore, and Read Classic Literature Online</p>
 </header>
 
 <div class="search-box">
-  <input type="text" id="searchInput" placeholder="Search by title, author, or genre..." onkeyup="searchBooks()">
+<input type="text" id="searchInput" placeholder="Search books..." onkeyup="searchBooks()">
+</div>
+
+<div class="genres">
+<button onclick="filterGenre('All')">All</button>
+<button onclick="filterGenre('Romance')">Romance</button>
+<button onclick="filterGenre('Fantasy')">Fantasy</button>
+<button onclick="filterGenre('Horror')">Horror</button>
+<button onclick="filterGenre('Adventure')">Adventure</button>
 </div>
 
 <div class="books" id="bookContainer">
 
-<!-- 20 BOOKS -->
-
-<div class="book-card">
+<div class="book-card" data-genre="Romance"
+onclick="openModal('Pride and Prejudice','Jane Austen','A romantic novel about manners and marriage.','Romance','https://www.gutenberg.org/cache/epub/1342/pg1342.cover.medium.jpg','https://www.gutenberg.org/files/1342/1342-h/1342-h.htm')">
 <img src="https://www.gutenberg.org/cache/epub/1342/pg1342.cover.medium.jpg">
 <h3>Pride and Prejudice</h3>
-<p>Romance | Jane Austen</p>
-<a href="https://www.gutenberg.org/ebooks/1342" target="_blank">Read Online</a>
+<p>Jane Austen</p>
 </div>
 
-<div class="book-card">
+<div class="book-card" data-genre="Fantasy"
+onclick="openModal('Alice in Wonderland','Lewis Carroll','A fantasy adventure of a girl in a magical world.','Fantasy','https://www.gutenberg.org/cache/epub/11/pg11.cover.medium.jpg','https://www.gutenberg.org/files/11/11-h/11-h.htm')">
 <img src="https://www.gutenberg.org/cache/epub/11/pg11.cover.medium.jpg">
-<h3>Alice's Adventures in Wonderland</h3>
-<p>Fantasy | Lewis Carroll</p>
-<a href="https://www.gutenberg.org/ebooks/11" target="_blank">Read Online</a>
+<h3>Alice in Wonderland</h3>
+<p>Lewis Carroll</p>
 </div>
 
-<div class="book-card">
-<img src="https://www.gutenberg.org/cache/epub/84/pg84.cover.medium.jpg">
-<h3>Frankenstein</h3>
-<p>Horror | Mary Shelley</p>
-<a href="https://www.gutenberg.org/ebooks/84" target="_blank">Read Online</a>
-</div>
-
-<div class="book-card">
-<img src="https://www.gutenberg.org/cache/epub/1661/pg1661.cover.medium.jpg">
-<h3>The Adventures of Sherlock Holmes</h3>
-<p>Mystery | Arthur Conan Doyle</p>
-<a href="https://www.gutenberg.org/ebooks/1661" target="_blank">Read Online</a>
-</div>
-
-<div class="book-card">
-<img src="https://www.gutenberg.org/cache/epub/2701/pg2701.cover.medium.jpg">
-<h3>Moby Dick</h3>
-<p>Adventure | Herman Melville</p>
-<a href="https://www.gutenberg.org/ebooks/2701" target="_blank">Read Online</a>
-</div>
-
-<div class="book-card">
-<img src="https://www.gutenberg.org/cache/epub/74/pg74.cover.medium.jpg">
-<h3>The Adventures of Tom Sawyer</h3>
-<p>Adventure | Mark Twain</p>
-<a href="https://www.gutenberg.org/ebooks/74" target="_blank">Read Online</a>
-</div>
-
-<div class="book-card">
-<img src="https://www.gutenberg.org/cache/epub/98/pg98.cover.medium.jpg">
-<h3>A Tale of Two Cities</h3>
-<p>Historical | Charles Dickens</p>
-<a href="https://www.gutenberg.org/ebooks/98" target="_blank">Read Online</a>
-</div>
-
-<div class="book-card">
+<div class="book-card" data-genre="Horror"
+onclick="openModal('Dracula','Bram Stoker','A gothic horror story of Count Dracula.','Horror','https://www.gutenberg.org/cache/epub/345/pg345.cover.medium.jpg','https://www.gutenberg.org/files/345/345-h/345-h.htm')">
 <img src="https://www.gutenberg.org/cache/epub/345/pg345.cover.medium.jpg">
 <h3>Dracula</h3>
-<p>Horror | Bram Stoker</p>
-<a href="https://www.gutenberg.org/ebooks/345" target="_blank">Read Online</a>
+<p>Bram Stoker</p>
 </div>
 
-<div class="book-card">
-<img src="https://www.gutenberg.org/cache/epub/1080/pg1080.cover.medium.jpg">
-<h3>A Modest Proposal</h3>
-<p>Satire | Jonathan Swift</p>
-<a href="https://www.gutenberg.org/ebooks/1080" target="_blank">Read Online</a>
-</div>
-
-<div class="book-card">
-<img src="https://www.gutenberg.org/cache/epub/43/pg43.cover.medium.jpg">
-<h3>The Strange Case of Dr Jekyll and Mr Hyde</h3>
-<p>Horror | Robert Louis Stevenson</p>
-<a href="https://www.gutenberg.org/ebooks/43" target="_blank">Read Online</a>
-</div>
-
-<div class="book-card">
-<img src="https://www.gutenberg.org/cache/epub/1400/pg1400.cover.medium.jpg">
-<h3>Great Expectations</h3>
-<p>Classic | Charles Dickens</p>
-<a href="https://www.gutenberg.org/ebooks/1400" target="_blank">Read Online</a>
-</div>
-
-<div class="book-card">
-<img src="https://www.gutenberg.org/cache/epub/1260/pg1260.cover.medium.jpg">
-<h3>Jane Eyre</h3>
-<p>Romance | Charlotte Brontë</p>
-<a href="https://www.gutenberg.org/ebooks/1260" target="_blank">Read Online</a>
-</div>
-
-<div class="book-card">
-<img src="https://www.gutenberg.org/cache/epub/55/pg55.cover.medium.jpg">
-<h3>The Wonderful Wizard of Oz</h3>
-<p>Fantasy | L. Frank Baum</p>
-<a href="https://www.gutenberg.org/ebooks/55" target="_blank">Read Online</a>
-</div>
-
-<div class="book-card">
+<div class="book-card" data-genre="Adventure"
+onclick="openModal('Treasure Island','Robert Louis Stevenson','A thrilling pirate adventure.','Adventure','https://www.gutenberg.org/cache/epub/120/pg120.cover.medium.jpg','https://www.gutenberg.org/files/120/120-h/120-h.htm')">
 <img src="https://www.gutenberg.org/cache/epub/120/pg120.cover.medium.jpg">
 <h3>Treasure Island</h3>
-<p>Adventure | Robert Louis Stevenson</p>
-<a href="https://www.gutenberg.org/ebooks/120" target="_blank">Read Online</a>
+<p>Robert Louis Stevenson</p>
 </div>
 
-<div class="book-card">
-<img src="https://www.gutenberg.org/cache/epub/76/pg76.cover.medium.jpg">
-<h3>Adventures of Huckleberry Finn</h3>
-<p>Adventure | Mark Twain</p>
-<a href="https://www.gutenberg.org/ebooks/76" target="_blank">Read Online</a>
 </div>
 
-<div class="book-card">
-<img src="https://www.gutenberg.org/cache/epub/521/pg521.cover.medium.jpg">
-<h3>Metamorphosis</h3>
-<p>Fiction | Franz Kafka</p>
-<a href="https://www.gutenberg.org/ebooks/521" target="_blank">Read Online</a>
+<div class="modal" id="bookModal">
+<div class="modal-content">
+<img id="modalImage">
+<h2 id="modalTitle"></h2>
+<p id="modalAuthor"></p>
+<p id="modalDescription"></p>
+<button id="readBtn">Read Online</button>
+<button onclick="closeModal()">Close</button>
 </div>
-
-<div class="book-card">
-<img src="https://www.gutenberg.org/cache/epub/5200/pg5200.cover.medium.jpg">
-<h3>The Metamorphosis (German)</h3>
-<p>Fiction | Franz Kafka</p>
-<a href="https://www.gutenberg.org/ebooks/5200" target="_blank">Read Online</a>
-</div>
-
-<div class="book-card">
-<img src="https://www.gutenberg.org/cache/epub/844/pg844.cover.medium.jpg">
-<h3>The Importance of Being Earnest</h3>
-<p>Comedy | Oscar Wilde</p>
-<a href="https://www.gutenberg.org/ebooks/844" target="_blank">Read Online</a>
-</div>
-
-<div class="book-card">
-<img src="https://www.gutenberg.org/cache/epub/16/pg16.cover.medium.jpg">
-<h3>Peter Pan</h3>
-<p>Fantasy | J.M. Barrie</p>
-<a href="https://www.gutenberg.org/ebooks/16" target="_blank">Read Online</a>
-</div>
-
-<div class="book-card">
-<img src="https://www.gutenberg.org/cache/epub/2814/pg2814.cover.medium.jpg">
-<h3>Dubliners</h3>
-<p>Classic | James Joyce</p>
-<a href="https://www.gutenberg.org/ebooks/2814" target="_blank">Read Online</a>
-</div>
-
 </div>
 
 <script>
 function searchBooks() {
   let input = document.getElementById("searchInput").value.toLowerCase();
   let cards = document.getElementsByClassName("book-card");
-
   for (let i = 0; i < cards.length; i++) {
     let text = cards[i].innerText.toLowerCase();
     cards[i].style.display = text.includes(input) ? "block" : "none";
   }
+}
+
+function filterGenre(genre) {
+  let cards = document.getElementsByClassName("book-card");
+  for (let i = 0; i < cards.length; i++) {
+    if (genre === "All" || cards[i].dataset.genre === genre) {
+      cards[i].style.display = "block";
+    } else {
+      cards[i].style.display = "none";
+    }
+  }
+}
+
+function openModal(title, author, desc, genre, img, link) {
+  document.getElementById("modalTitle").innerText = title;
+  document.getElementById("modalAuthor").innerText = "By " + author + " | " + genre;
+  document.getElementById("modalDescription").innerText = desc;
+  document.getElementById("modalImage").src = img;
+  document.getElementById("readBtn").onclick = function() {
+    window.open(link, "_blank");
+  };
+  document.getElementById("bookModal").style.display = "flex";
+}
+
+function closeModal() {
+  document.getElementById("bookModal").style.display = "none";
 }
 </script>
 
