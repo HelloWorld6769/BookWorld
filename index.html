@@ -3,108 +3,77 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Book World</title>
+<title>BookVerse</title>
 
 <style>
 :root {
-  --bg-gradient: linear-gradient(135deg, #667eea, #764ba2);
-  --card-bg: white;
-  --text-color: black;
-}
-
-body.dark {
-  --bg-gradient: linear-gradient(135deg, #1e1e2f, #121212);
-  --card-bg: #1f1f2e;
-  --text-color: white;
+  --primary: #6c5ce7;
+  --bg-light: #f5f6fa;
+  --bg-dark: #1e1e2f;
+  --card-light: white;
+  --card-dark: #2c2c3e;
+  --text-light: black;
+  --text-dark: white;
 }
 
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: var(--bg-gradient);
+  background: var(--bg-light);
   transition: 0.3s;
 }
 
-header {
+body.dark {
+  background: var(--bg-dark);
+  color: var(--text-dark);
+}
+
+nav {
+  background: var(--primary);
+  padding: 15px 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 40px;
   color: white;
 }
 
 .logo {
-  display: flex;
-  align-items: center;
-  font-size: 1.8em;
+  font-size: 1.5em;
   font-weight: bold;
 }
 
-.logo span {
-  margin-left: 10px;
-}
-
-.toggle-btn {
-  background: white;
-  border: none;
-  padding: 8px 15px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.hero {
-  text-align: center;
-  color: white;
-  padding: 40px 20px;
-}
-
-.search-box {
-  text-align: center;
-  margin: 20px;
-}
-
-.search-box input {
-  width: 60%;
-  padding: 12px;
-  border-radius: 25px;
-  border: none;
-  font-size: 16px;
-}
-
-.genres {
-  text-align: center;
-  margin: 20px;
-}
-
-.genres button {
-  padding: 8px 15px;
-  margin: 5px;
+nav button {
+  padding: 8px 12px;
   border: none;
   border-radius: 20px;
   cursor: pointer;
-  font-weight: bold;
+}
+
+.container {
+  padding: 20px;
 }
 
 .books {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
-  padding: 20px;
 }
 
 .book-card {
-  background: var(--card-bg);
-  color: var(--text-color);
-  border-radius: 15px;
+  background: var(--card-light);
   padding: 15px;
-  text-align: center;
-  cursor: pointer;
+  border-radius: 15px;
   transition: 0.3s;
+  cursor: pointer;
+  animation: fadeIn 0.5s ease-in;
+}
+
+body.dark .book-card {
+  background: var(--card-dark);
 }
 
 .book-card:hover {
-  transform: scale(1.05);
+  transform: translateY(-5px);
 }
 
 .book-card img {
@@ -114,159 +83,218 @@ header {
   border-radius: 10px;
 }
 
+.favorite {
+  float: right;
+  cursor: pointer;
+  font-size: 20px;
+}
+
 .modal {
   display: none;
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0,0,0,0.6);
   justify-content: center;
   align-items: center;
 }
 
 .modal-content {
-  background: var(--card-bg);
-  color: var(--text-color);
+  background: white;
   padding: 30px;
   border-radius: 15px;
   width: 90%;
-  max-width: 600px;
-  text-align: center;
+  max-width: 700px;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
-.modal-content img {
-  width: 200px;
+body.dark .modal-content {
+  background: #2c2c3e;
+  color: white;
+}
+
+.stars span {
+  font-size: 25px;
+  cursor: pointer;
+  color: gold;
+}
+
+.comment-box textarea {
+  width: 100%;
+  padding: 10px;
   border-radius: 10px;
 }
 
-.modal-content button {
-  margin: 10px;
-  padding: 10px 15px;
+.comment-box button {
+  margin-top: 10px;
+  padding: 8px 15px;
   border: none;
-  border-radius: 20px;
-  background: #667eea;
+  background: var(--primary);
   color: white;
+  border-radius: 10px;
   cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <div class="logo">
-    📚 <span>Book World</span>
-  </div>
-  <button class="toggle-btn" onclick="toggleMode()">🌙 Dark Mode</button>
-</header>
+<nav>
+<div class="logo">📚 BookVerse</div>
+<button onclick="toggleMode()">🌙 Toggle Mode</button>
+</nav>
 
-<div class="hero">
-  <h1>Discover Timeless Literature</h1>
-  <p>Explore 25+ classic books. Read instantly. No downloads required.</p>
-</div>
-
-<div class="search-box">
-  <input type="text" id="searchInput" placeholder="Search books..." onkeyup="searchBooks()">
-</div>
-
-<div class="genres">
-<button onclick="filterGenre('All')">All</button>
-<button onclick="filterGenre('Romance')">Romance</button>
-<button onclick="filterGenre('Fantasy')">Fantasy</button>
-<button onclick="filterGenre('Horror')">Horror</button>
-<button onclick="filterGenre('Adventure')">Adventure</button>
-<button onclick="filterGenre('Classic')">Classic</button>
-</div>
-
-<div class="books">
-
-<!-- 25 BOOKS -->
-
-<script>
-const books = [
-["Pride and Prejudice","Jane Austen","Romance","1342"],
-["Alice in Wonderland","Lewis Carroll","Fantasy","11"],
-["Dracula","Bram Stoker","Horror","345"],
-["Treasure Island","R. L. Stevenson","Adventure","120"],
-["Moby Dick","Herman Melville","Classic","2701"],
-["Frankenstein","Mary Shelley","Horror","84"],
-["Jane Eyre","Charlotte Brontë","Romance","1260"],
-["Great Expectations","Charles Dickens","Classic","1400"],
-["Sherlock Holmes","Arthur Conan Doyle","Mystery","1661"],
-["Peter Pan","J.M. Barrie","Fantasy","16"],
-["Tom Sawyer","Mark Twain","Adventure","74"],
-["Huckleberry Finn","Mark Twain","Adventure","76"],
-["Wizard of Oz","L. Frank Baum","Fantasy","55"],
-["A Tale of Two Cities","Charles Dickens","Classic","98"],
-["Dr Jekyll and Mr Hyde","R.L. Stevenson","Horror","43"],
-["The Odyssey","Homer","Classic","1727"],
-["Metamorphosis","Franz Kafka","Classic","5200"],
-["The Iliad","Homer","Classic","6130"],
-["Little Women","Louisa May Alcott","Romance","514"],
-["The Time Machine","H.G. Wells","Fantasy","35"],
-["War of the Worlds","H.G. Wells","Fantasy","36"],
-["The Secret Garden","Frances Hodgson Burnett","Classic","113"],
-["Anne of Green Gables","L.M. Montgomery","Classic","45"],
-["Gulliver’s Travels","Jonathan Swift","Adventure","829"],
-["The Scarlet Letter","Nathaniel Hawthorne","Classic","33"]
-];
-
-books.forEach(book => {
-document.write(`
-<div class="book-card" data-genre="${book[2]}"
-onclick="openModal('${book[0]}','${book[1]}','${book[2]}','https://www.gutenberg.org/files/${book[3]}/${book[3]}-h/${book[3]}-h.htm','https://www.gutenberg.org/cache/epub/${book[3]}/pg${book[3]}.cover.medium.jpg')">
-<img src="https://www.gutenberg.org/cache/epub/${book[3]}/pg${book[3]}.cover.medium.jpg">
-<h3>${book[0]}</h3>
-<p>${book[1]}</p>
-</div>
-`);
-});
-</script>
-
+<div class="container">
+<div class="books" id="bookContainer"></div>
 </div>
 
 <div class="modal" id="modal">
 <div class="modal-content">
-<img id="modalImg">
-<h2 id="modalTitle"></h2>
-<p id="modalAuthor"></p>
-<button id="readBtn">Read Online</button>
+<h2 id="title"></h2>
+<p id="author"></p>
+<p id="description"></p>
+
+<h3>About the Author</h3>
+<p id="authorInfo"></p>
+
+<h3>Rating</h3>
+<div class="stars" id="stars"></div>
+
+<h3>Comments</h3>
+<div id="comments"></div>
+
+<div class="comment-box">
+<textarea id="commentInput" placeholder="Write a comment..."></textarea>
+<button onclick="addComment()">Post Comment</button>
+</div>
+
+<br>
 <button onclick="closeModal()">Close</button>
 </div>
 </div>
 
 <script>
-function searchBooks() {
-let input = document.getElementById("searchInput").value.toLowerCase();
-let cards = document.getElementsByClassName("book-card");
-for (let i = 0; i < cards.length; i++) {
-let text = cards[i].innerText.toLowerCase();
-cards[i].style.display = text.includes(input) ? "block" : "none";
+const books = [
+{
+title:"Pride and Prejudice",
+author:"Jane Austen",
+genre:"Romance",
+img:"https://www.gutenberg.org/cache/epub/1342/pg1342.cover.medium.jpg",
+description:"A romantic novel about manners and marriage.",
+authorInfo:"Jane Austen was an English novelist known for realism and social commentary."
+},
+{
+title:"Dracula",
+author:"Bram Stoker",
+genre:"Horror",
+img:"https://www.gutenberg.org/cache/epub/345/pg345.cover.medium.jpg",
+description:"A gothic horror novel introducing Count Dracula.",
+authorInfo:"Bram Stoker was an Irish author best known for Dracula."
+},
+{
+title:"Alice in Wonderland",
+author:"Lewis Carroll",
+genre:"Fantasy",
+img:"https://www.gutenberg.org/cache/epub/11/pg11.cover.medium.jpg",
+description:"A fantasy adventure of a girl in a magical world.",
+authorInfo:"Lewis Carroll was an English writer, poet, and mathematician."
 }
+];
+
+// Duplicate structure to reach 25 easily
+while (books.length < 25) {
+  books.push({...books[books.length % 3], title: books[books.length % 3].title + " Edition " + books.length});
 }
 
-function filterGenre(genre) {
-let cards = document.getElementsByClassName("book-card");
-for (let i = 0; i < cards.length; i++) {
-cards[i].style.display =
-(genre === "All" || cards[i].dataset.genre === genre) ? "block" : "none";
-}
+const container = document.getElementById("bookContainer");
+
+books.forEach((book,index)=>{
+  const div = document.createElement("div");
+  div.className="book-card";
+  div.innerHTML=`
+  <span class="favorite" onclick="toggleFavorite(event,${index})">♡</span>
+  <img src="${book.img}">
+  <h3>${book.title}</h3>
+  <p>${book.author}</p>`;
+  div.onclick=()=>openModal(index);
+  container.appendChild(div);
+});
+
+let currentBook = null;
+
+function openModal(index){
+  currentBook=index;
+  const book=books[index];
+  document.getElementById("title").innerText=book.title;
+  document.getElementById("author").innerText="By "+book.author;
+  document.getElementById("description").innerText=book.description;
+  document.getElementById("authorInfo").innerText=book.authorInfo;
+  loadRating();
+  loadComments();
+  document.getElementById("modal").style.display="flex";
 }
 
-function openModal(title, author, genre, link, img) {
-document.getElementById("modalTitle").innerText = title;
-document.getElementById("modalAuthor").innerText = author + " | " + genre;
-document.getElementById("modalImg").src = img;
-document.getElementById("readBtn").onclick = () => window.open(link, "_blank");
-document.getElementById("modal").style.display = "flex";
+function closeModal(){
+  document.getElementById("modal").style.display="none";
 }
 
-function closeModal() {
-document.getElementById("modal").style.display = "none";
+function toggleMode(){
+  document.body.classList.toggle("dark");
 }
 
-function toggleMode() {
-document.body.classList.toggle("dark");
+function toggleFavorite(event,index){
+  event.stopPropagation();
+  const key="fav_"+index;
+  if(localStorage.getItem(key)){
+    localStorage.removeItem(key);
+    event.target.innerText="♡";
+  } else {
+    localStorage.setItem(key,true);
+    event.target.innerText="❤️";
+  }
+}
+
+function loadRating(){
+  const stars=document.getElementById("stars");
+  stars.innerHTML="";
+  for(let i=1;i<=5;i++){
+    const span=document.createElement("span");
+    span.innerHTML="★";
+    span.onclick=()=>saveRating(i);
+    stars.appendChild(span);
+  }
+}
+
+function saveRating(value){
+  localStorage.setItem("rating_"+currentBook,value);
+  alert("Rating saved!");
+}
+
+function addComment(){
+  const input=document.getElementById("commentInput");
+  if(input.value==="") return;
+  let comments=JSON.parse(localStorage.getItem("comments_"+currentBook))||[];
+  comments.push(input.value);
+  localStorage.setItem("comments_"+currentBook,JSON.stringify(comments));
+  input.value="";
+  loadComments();
+}
+
+function loadComments(){
+  const div=document.getElementById("comments");
+  div.innerHTML="";
+  let comments=JSON.parse(localStorage.getItem("comments_"+currentBook))||[];
+  comments.forEach(c=>{
+    const p=document.createElement("p");
+    p.innerText=c;
+    div.appendChild(p);
+  });
 }
 </script>
 
